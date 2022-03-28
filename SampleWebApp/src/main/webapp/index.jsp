@@ -9,7 +9,7 @@ Although you can use them, for a more unique website, replace these images with 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-    <title>Business 2</title>
+    <title>DevOps Class Demo App</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -250,7 +250,7 @@ Although you can use them, for a more unique website, replace these images with 
 						</p>
 						<h2>Contact Us</h2>
 						<p class="lead"><span class="glyphicon glyphicon-phone-alt"></span> +1(23) 456 7890<br>
-						info@example.com</p>
+						info@techdavez.com</p>
 					</div>
 				</div>
 			</div>
@@ -299,7 +299,7 @@ Although you can use them, for a more unique website, replace these images with 
         <div class="small-print">
         	<div class="container">
         		<p><a href="#">Terms &amp; Conditions</a> | <a href="#">Privacy Policy</a> | <a href="#">Contact</a></p>
-        		<p>Copyright &copy; Example.com 2015 </p>
+        		<p>Copyright &copy; Techdavez Integrated Systems 2022 </p>
         	</div>
         </div>
         
