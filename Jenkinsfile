@@ -8,20 +8,6 @@ pipeline {
             }
         }
         
-        stage("SonarQube analysis") {
-            steps {
-              withSonarQubeEnv('mysonar') {
-                sh 'mvn -f SampleWebApp/pom.xml clean package sonar:sonar'
-              }
-            }
-          }
-        
-        stage('Quality Gate') {
-            steps {
-                waitForQualityGate abortPipeline: true, credentialsId: 'sonar-cred'
-            }
-        }
-        
         stage('Test') {
             steps {
                 sh 'cd SampleWebApp && mvn test'
@@ -29,33 +15,27 @@ pipeline {
         }
         stage('Build with Maven') {
             steps {
-                sh 'cd SampleWebApp && mvn clean package -Dbuild.number=${BUILD_NUMBER}'
-            }
-        }
-        
-        stage('Deploy to Jfrog') {
-            steps {
-                rtUpload (
-                    serverId: 'my-jfrog',
-                    spec: '''{
-                        "files": [
-                            {
-                            "pattern": "**/*.war",
-                            "target": "my-repo/"
-                            }
-                        ]
-                    }''',
-                )
+                sh 'cd SampleWebApp && mvn clean package'
             }
         }
 
-        stage('Deploy to Tom') {
+        stage('Deploy to Dev') {
             steps {
-                deploy adapters: [tomcat9(credentialsId: 'devops',
-                path: '', 
-                url: 'http://44.203.197.50:8080')], 
-                contextPath: 'default', 
-                war: '**/*.war'
+                step([$class: 'AWSEBDeploymentBuilder', credentialId: 'aws-cred',
+                awsRegion: 'us-east-1', applicationName: 'my-application', environmentName: 'develop', keyPrefix: 'dev', sleepTime: 5,
+                bucketName: 'elasticbeanstalk-us-east-1-855171129788', rootObject: 'SampleWebApp/target/SampleWebApp-1.0.null.war', versionLabelFormat: '$BUILD_NUMBER'])
+                
+            }
+        }
+        stage('Deploy to Prod') {
+             when {
+               branch "master"
+                }
+            steps {
+                step([$class: 'AWSEBDeploymentBuilder', credentialId: 'aws-cred',
+                awsRegion: 'us-east-1', applicationName: 'my-application', environmentName: 'production', keyPrefix: 'prod', sleepTime: 5,
+                bucketName: 'elasticbeanstalk-us-east-1-855171129788', rootObject: 'SampleWebApp/target/SampleWebApp-1.0.null.war', versionLabelFormat: '$BUILD_NUMBER'])
+                
             }
         }
     }
