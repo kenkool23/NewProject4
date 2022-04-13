@@ -20,6 +20,9 @@ pipeline {
         }
 
         stage('Deploy to Dev') {
+            when {
+               branch "develop"
+                }
             steps {
                 step([$class: 'AWSEBDeploymentBuilder', credentialId: 'aws-cred',
                 awsRegion: 'us-east-1', applicationName: 'my-application', environmentName: 'develop', keyPrefix: 'dev', sleepTime: 5,
