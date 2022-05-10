@@ -25,8 +25,8 @@ pipeline {
                 }
             steps {
                 step([$class: 'AWSEBDeploymentBuilder', credentialId: 'aws-cred',
-                awsRegion: 'us-east-1', applicationName: 'my-application', environmentName: 'develop', keyPrefix: 'dev', sleepTime: 5,
-                bucketName: 'elasticbeanstalk-us-east-1-855171129788', rootObject: 'SampleWebApp/target/SampleWebApp-1.0.null.war', versionLabelFormat: 'dev-$BUILD_NUMBER'])
+                awsRegion: 'us-east-2', applicationName: 'just-app', environmentName: 'develop-env', keyPrefix: 'dev', sleepTime: 5,
+                bucketName: 'elasticbeanstalk-us-east-2-855171129788', rootObject: 'SampleWebApp/target/SampleWebApp-1.0.null.war', versionLabelFormat: 'dev-$BUILD_NUMBER'])
                 
             }
         }
@@ -36,8 +36,8 @@ pipeline {
                 }
             steps {
                 step([$class: 'AWSEBDeploymentBuilder', credentialId: 'aws-cred',
-                awsRegion: 'us-east-1', applicationName: 'my-application', environmentName: 'production', keyPrefix: 'prod', sleepTime: 5,
-                bucketName: 'elasticbeanstalk-us-east-1-855171129788', rootObject: 'SampleWebApp/target/SampleWebApp-1.0.null.war', versionLabelFormat: 'prod-$BUILD_NUMBER'])
+                awsRegion: 'us-east-2', applicationName: 'my-application', environmentName: 'production', keyPrefix: 'prod', sleepTime: 5,
+                bucketName: 'elasticbeanstalk-us-east-2-855171129788', rootObject: 'SampleWebApp/target/SampleWebApp-1.0.null.war', versionLabelFormat: 'prod-$BUILD_NUMBER'])
                 
             }
         }
