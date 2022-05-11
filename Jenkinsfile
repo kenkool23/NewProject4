@@ -19,24 +19,25 @@ pipeline {
             }
         }
 
-        stage('Deploy to Dev') {
+        stage('Deploy to Staging') {
             when {
-               branch "develop"
+               branch "staging"
                 }
             steps {
                 step([$class: 'AWSEBDeploymentBuilder', credentialId: 'aws-cred',
-                awsRegion: 'us-east-2', applicationName: 'just-app', environmentName: 'develop-env', keyPrefix: 'dev', sleepTime: 5,
-                bucketName: 'elasticbeanstalk-us-east-2-855171129788', rootObject: 'SampleWebApp/target/SampleWebApp-1.0.null.war', versionLabelFormat: 'dev-$BUILD_NUMBER'])
+                awsRegion: 'us-east-2', applicationName: 'tomcat-app', environmentName: 'staging-env', keyPrefix: 'stage', sleepTime: 5,
+                bucketName: 'elasticbeanstalk-us-east-2-855171129788', rootObject: 'SampleWebApp/target/SampleWebApp-1.0.null.war', versionLabelFormat: 'staging-$BUILD_NUMBER'])
                 
             }
         }
+
         stage('Deploy to Prod') {
              when {
                branch "master"
                 }
             steps {
                 step([$class: 'AWSEBDeploymentBuilder', credentialId: 'aws-cred',
-                awsRegion: 'us-east-2', applicationName: 'just-app', environmentName: 'production', keyPrefix: 'prod', sleepTime: 5,
+                awsRegion: 'us-east-2', applicationName: 'tomcat-app', environmentName: 'production1', keyPrefix: 'prod', sleepTime: 5,
                 bucketName: 'elasticbeanstalk-us-east-2-855171129788', rootObject: 'SampleWebApp/target/SampleWebApp-1.0.null.war', versionLabelFormat: 'prod-$BUILD_NUMBER'])
                 
             }
